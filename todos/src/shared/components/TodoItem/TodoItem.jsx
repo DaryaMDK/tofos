@@ -11,6 +11,7 @@ const deleteItem = task => {
 }
 
 console.log('todoitem ' + todoItem);
+console.log('test');
 
   return (
     <li>{task.text}
