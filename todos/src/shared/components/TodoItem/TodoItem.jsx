@@ -1,26 +1,80 @@
 import { useState } from "react";
 import styles from "../Todo/styles.module.scss";
 
-const TodoItem = ({ task }) => {
+const TodoItem = ({ task, onDeleteTask, setTasks }) => {
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editValue, setEditValue] = useState(task.text);
 
-const [todoItem, setTodoItem] = useState([task]);
+  const onDoneChange = (e) => {
+    setTasks((prevState) =>
+      prevState.map((targetTask) => {
+        if (targetTask.id !== task.id) return targetTask;
 
-const deleteItem = task => {
-    const removeArr = [...todoItem].filter(todoItem => task.id !== todoItem)
-    setTodoItem(removeArr)
-}
+        return { ...targetTask, isDone: e.target.checked };
+      })
+    );
+  };
 
-console.log('todoitem ' + todoItem);
-console.log('test');
+  const editValueChange = (e) => {
+    setEditValue(e.target.value);
+  };
+
+  const onEditEnterPress = (e) => {
+    if (e.code !== "Enter") return;
+
+    setIsEditMode(false);
+    setTasks((prevState) =>
+      prevState.map((targetTask) => {
+        if (targetTask.id !== task.id) return targetTask;
+
+        targetTask.text = editValue;
+        return targetTask;
+      })
+    );
+  };
+
+  const onEdit = () => setIsEditMode(true);
 
   return (
-    <li>{task.text}
-        <button 
+    <li>
+      <label>
+        <input
+          onChange={onDoneChange}
+          checked={task.isDone}
+          className={styles.checkboxItem}
+          type="checkbox"
+        />
+      </label>
+      {isEditMode ? (
+        <input
+          onInput={editValueChange}
+          onKeyPress={onEditEnterPress}
+          value={editValue}
+          type="text"
+        />
+      ) : (
+        <p
+          className={styles.textTask}
+          style={{ textDecoration: task.isDone ? "line-through" : "none" }}
+        >
+          {task.text}
+        </p>
+      )}
+
+      {!isEditMode && (
+        <button className={styles.edit} onClick={onEdit}>
+          edit
+        </button>
+      )}
+
+      <button
         className={styles.clearTasksBtn}
-        onClick={() => deleteItem(task.id)}>
-        delete</button> 
+        onClick={() => onDeleteTask(task.id)}
+      >
+        delete
+      </button>
     </li>
-  )
-}
+  );
+};
 
 export default TodoItem;

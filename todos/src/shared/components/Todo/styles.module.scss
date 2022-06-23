@@ -112,3 +112,47 @@ $common-border-radius: 30px;
     border: 2px solid;
   }
 }
+
+.edit {
+  position: absolute;
+  width: 100px;
+  height: 30px;
+  margin-left: 500px;
+  background-color: white;
+  border: 1px solid rgb(87, 181, 224);
+  border-radius: 15px;
+  color: #6b6b6b;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    color: rgb(87, 181, 224);
+    border: 2px solid;
+  }
+}
+
+.removeBtn{
+  width: 150px;
+  height: 30px;
+  margin: 20px 10px;
+  background-color: white;
+  border: 1px solid rgb(110, 11, 11);
+  border-radius: 15px;
+  color: #6b6b6b;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    color: rgb(110, 11, 11);
+    border: 2px solid;
+  }
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+p {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: medium;
+}
